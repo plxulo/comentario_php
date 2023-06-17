@@ -9,10 +9,30 @@ CREATE TABLE usuarios
     senha VARCHAR(50)
 );
 
+CREATE TABLE usuarios_admin
+(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50),
+    email VARCHAR(50),
+    senha VARCHAR(50)
+);
+
 CREATE TABLE app_comentarios
 (
     id INT PRIMARY KEY AUTO_INCREMENT,
     comentario VARCHAR(500),
     id_usuario INT,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+);
+
+CREATE TABLE app_posts
+(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(50),
+    conteudo VARCHAR(500),
+    imagem MEDIUMBLOB,
+    id_admin INT,
+    id_comentario INT,
+    FOREIGN KEY (id_comentario) REFERENCES app_comentarios(id),
+    FOREIGN KEY (id_admin) REFERENCES usuarios_admin(id)
 );

@@ -6,12 +6,12 @@
         Separar no banco de dados para não poluir a tabela usuários.
     */
 
-    include("conexao.php");
+    include("../php/conexao.php");
     session_start();
 
     $comentario = $_POST['frm_comentario'];
     $nome = $_POST['frm_nome'];
-    $id_usuario = $_SESSION['id'];
+    $id_usuario = $_SESSION['id_adm'];
 
     if((isset ($_SESSION['usuario']) == TRUE) AND (isset ($_SESSION['senha']) == TRUE))
     {
@@ -26,6 +26,6 @@
 
     if($inserir_comentario)
     {
-        header("Location: pagina_post.php");
+        header("Location: index_admin.php");
     }
 ?>

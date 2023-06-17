@@ -12,6 +12,10 @@
 </head>
 <body>
 
+    <div align="left">
+       <a href="../admin/login_admin.php">Área do Administrador</a>
+    </div>
+
     <main align="center">
         <div class="banner">
             <h1>Cadastro</h1>

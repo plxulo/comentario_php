@@ -10,13 +10,12 @@
     $logado = $_SESSION['usuario'];
     $id_usuario = $_SESSION['id'];
 
-    // Selecionar o nome do usuário que enviou comentário por chave estrangeira:
-    $selecionar_comentario = $pdo->prepare
-    ("SELECT app_comentarios.*, usuarios.nome 
-      FROM app_comentarios INNER JOIN usuarios 
-      ON app_comentarios.id_usuario = usuarios.id 
+    $selecionar_posts = $pdo->prepare
+    ("SELECT app_posts.*, usuarios_admin.nome
+      FROM app_posts INNER JOIN usuarios_admin
+      ON app_posts.id_admin = usuarios_admin.id
     ");
-    $selecionar_comentario->execute();
+    $selecionar_posts->execute();
 ?>
 
 <!DOCTYPE html>
@@ -30,10 +29,13 @@
 </head>
 
 <body>
-    <main align="center">
-        <div class="banner">
+    <main style="display:flex; flex-direction:column; align-items:center">
+        <div class="banner" style="display:flex; flex-direction:column; align-items:center">
             <h1>Olá, <?php echo $logado; ?>!</h1>
-            <a href="logout.php">Sair</a>
+            <div>
+                <a href="../admin/login_admin.php">Área do Administrador</a>
+                <a href="logout.php">Sair</a>
+            </div>
         </div>
 
         <div style="display:flex; flex-direction:column; align-items:center">
@@ -52,33 +54,37 @@
             </form>
         </div>
 
-        <div>
+        <!-- Exibir posts: -->
+        <div style="display:flex; flex-direction:column; width: 25%; text-align:left">
+            
             <?php
-                if($selecionar_comentario->rowCount() == 0)
+                if($selecionar_posts->rowCount() == 0)
                 {
-                    echo("<p>Nenhum comentário no momento.</p>");
+                    echo("<p>Nenhum post no momento.</p>");
                 }
                 else
                 {
-                    while($row_comentario = $selecionar_comentario->fetch())
+                    while($row_posts = $selecionar_posts->fetch())
                     {
-                        // Caso deseje exibir o nome do usuário na sessão sem definir
-                        // Uma entrada de input "nome" para o mesmo, utilize a tabela e sessão.
-                        $nome = $row_comentario["nome"];
-
-                        // Nesse caso, como eu possuo uma entrada para o nome e desejo exibir
-                        // O nome de cada entrada, eu utilizarei o seguinte código
-                        // Para atribuir o valor da entrada nome para a variável e exibi-lá:
-                        $comentario = $row_comentario["comentario"];
-
-                        echo("<h2 style='margin-bottom:0'>" . $nome . "</h2>");
-                        echo("<br>");
-                        echo("<p style='margin-top:0'>" . $comentario . "</p>");
+                        $id_post = $row_posts["id"];
+                        $titulo = $row_posts["titulo"];
+                        $nome_admin = $row_posts["nome"];
+                        $conteudo = $row_posts["conteudo"];
+                    
+                        // Cada DIV é um post:
+                        echo("<div>");
+                            // Envolver conteúdo exibido na lista em um <a> que envia por meio da URL $_GET o valor id = $id_post
+                            echo("<a style='text-decoration:none; color:black' href='pagina_post.php?id=" . $id_post . "'>");
+                                echo("<h3 style='margin-bottom:0'>" . $titulo . "</h3>");
+                                echo("<p style='margin-top:0'>Criador: " . $nome_admin . "</p>");
+                                echo("<br>");
+                                echo("<p style='margin-top:0'>" . $conteudo . "</p>");
+                            echo("</a>");
+                        echo("</div>");
                     }
                 }
             ?>
         </div>
-
     </main>
 </body>
 </html>

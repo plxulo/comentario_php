@@ -13,16 +13,15 @@
 <body>
 
     <div align="left">
-       <a href="../admin/login_admin.php">Área do Administrador</a>
+        <a href="../php/login_usuario.php">Área do Usuário</a>
     </div>
-
     <main align="center">
         <div class="banner">
-            <h1>Login</h1>
+            <h1>Login Administrador</h1>
         </div>
 
         <!-- Formulário de cadastro -->
-        <form action="validar_usuario.php" method="POST">
+        <form action="validar_admin.php" method="POST">
             <label for="nome">Nome</label>
             <input type="text" name="nome" id="nome">
             <br>
@@ -33,7 +32,7 @@
             <!-- Enviar os dados do formulário -->
             <button type="submit">Enviar</button>
         </form>
-        <a href="cadastro_usuario.php">Não tenho conta</a>
+        <a href="cadastro_admin.php">Não tenho conta</a>
     </main>    
     
 </body>

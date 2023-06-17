@@ -11,20 +11,23 @@
     <title>Cadastro</title>
 </head>
 <body>
-
+    
     <div align="left">
-       <a href="../admin/login_admin.php">Área do Administrador</a>
+       <a href="../php/login_usuario.php">Área do Usuário</a>
     </div>
 
     <main align="center">
         <div class="banner">
-            <h1>Login</h1>
+            <h1>Cadastro Administrador</h1>
         </div>
 
         <!-- Formulário de cadastro -->
-        <form action="validar_usuario.php" method="POST">
+        <form action="inserir_admin.php" method="POST">
             <label for="nome">Nome</label>
             <input type="text" name="nome" id="nome">
+            <br>
+            <label for="email">Email</label>
+            <input type="mail" name="email" id="email">
             <br>
             <label for="senha">Senha</label>
             <input type="password" name="senha" id="senha">
@@ -33,8 +36,8 @@
             <!-- Enviar os dados do formulário -->
             <button type="submit">Enviar</button>
         </form>
-        <a href="cadastro_usuario.php">Não tenho conta</a>
+        <a href="login_admin.php">Já tenho conta</a>
     </main>    
-    
+
 </body>
 </html>
