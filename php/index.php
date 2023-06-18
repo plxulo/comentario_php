@@ -16,6 +16,8 @@
       ON app_posts.id_admin = usuarios_admin.id
     ");
     $selecionar_posts->execute();
+
+    unset($_SESSION['id_post']);
 ?>
 
 <!DOCTYPE html>
@@ -80,6 +82,7 @@
                                 echo("<br>");
                                 echo("<p style='margin-top:0'>" . $conteudo . "</p>");
                             echo("</a>");
+                            echo("<hr>");
                         echo("</div>");
                     }
                 }

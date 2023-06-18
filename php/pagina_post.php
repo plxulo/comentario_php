@@ -35,6 +35,7 @@
             <?php
                 // Recebe o valor da URL definido no index.php por meio do $_GET (está na URL né) e passa o valor para a variável $id_post:
                 $id_post = $_GET["id"];
+                $_SESSION["id_post"] = $id_post;
                 // Utilizando o ID recebido realizamos uma consulta no banco de dados!
                 $selecionar_posts = $pdo->prepare
                 ("SELECT app_posts.*, usuarios_admin.nome
@@ -95,7 +96,9 @@
                 ("SELECT app_comentarios.*, usuarios.nome 
                 FROM app_comentarios INNER JOIN usuarios 
                 ON app_comentarios.id_usuario = usuarios.id 
+                WHERE app_comentarios.id_post = :id_post
                 ");
+                $selecionar_comentario->bindValue(":id_post", $id_post);
                 $selecionar_comentario->execute();
 
                 if($selecionar_comentario->rowCount() == 0)

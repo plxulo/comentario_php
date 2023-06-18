@@ -22,6 +22,8 @@ CREATE TABLE app_comentarios
     id INT PRIMARY KEY AUTO_INCREMENT,
     comentario VARCHAR(500),
     id_usuario INT,
+    id_post INT,
+    FOREIGN KEY (id_post) REFERENCES app_posts(id),
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 );
 
