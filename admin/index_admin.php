@@ -59,7 +59,7 @@
 
                 if($selecionar_comentario->rowCount() == 0)
                 {
-                    echo("<p>Nenhum comentário no momento.</p>");
+                    echo("<p>Nenhum post no momento.</p>");
                 }
                 else
                 {

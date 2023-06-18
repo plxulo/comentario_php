@@ -10,13 +10,6 @@
     $logado = $_SESSION['usuario'];
     $id_usuario = $_SESSION['id'];
 
-    $selecionar_posts = $pdo->prepare
-    ("SELECT app_posts.*, usuarios_admin.nome
-      FROM app_posts INNER JOIN usuarios_admin
-      ON app_posts.id_admin = usuarios_admin.id
-    ");
-    $selecionar_posts->execute();
-
     unset($_SESSION['id_post']);
 ?>
 
@@ -60,6 +53,13 @@
         <div style="display:flex; flex-direction:column; width: 25%; text-align:left">
             
             <?php
+                $selecionar_posts = $pdo->prepare
+                ("SELECT app_posts.*, usuarios_admin.nome
+                  FROM app_posts INNER JOIN usuarios_admin
+                  ON app_posts.id_admin = usuarios_admin.id
+                ");
+                $selecionar_posts->execute();
+
                 if($selecionar_posts->rowCount() == 0)
                 {
                     echo("<p>Nenhum post no momento.</p>");
@@ -72,6 +72,8 @@
                         $titulo = $row_posts["titulo"];
                         $nome_admin = $row_posts["nome"];
                         $conteudo = $row_posts["conteudo"];
+                        $imagem = $row_posts["imagem"];
+                        $i = base64_encode($imagem);
                     
                         // Cada DIV é um post:
                         echo("<div>");
@@ -79,6 +81,8 @@
                             echo("<a style='text-decoration:none; color:black' href='pagina_post.php?id=" . $id_post . "'>");
                                 echo("<h3 style='margin-bottom:0'>" . $titulo . "</h3>");
                                 echo("<p style='margin-top:0'>Criador: " . $nome_admin . "</p>");
+                                echo("<br>");
+                                echo("<img src='data:image/jpeg;base64," . $i . "' style='width:100%; height:auto;' alt='Imagem do post'>");
                                 echo("<br>");
                                 echo("<p style='margin-top:0'>" . $conteudo . "</p>");
                             echo("</a>");

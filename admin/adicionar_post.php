@@ -33,12 +33,14 @@
 
         <div style="display:flex; flex-direction:column; align-items:center">
             <!-- Formulário de comentários: -->
-            <form action="processar_post.php" method="POST" class="frm_post" style="text-align: left;">
+            <form action="processar_post.php" method="POST" class="frm_post" style="text-align: left;" enctype="multipart/form-data">
                 <label class="texto_formulario" for="nome">Título:</label><br>
                 <input type="text" class="pst_titulo" name="pst_titulo" id="titulo">
                 <br>
                 <label class="texto_formulario" for="email">Conteúdo:</label><br>
                 <textarea class="pst_conteudo" name="pst_conteudo" id="conteudo"></textarea>
+                <br>
+                <input type="file" class="pst_imagem" name="pst_imagem" id="imagem">
                 <br>
                 <input type="submit" name="pst_submit" id="pst_submit" class="pst_submit" value="Enviar post">
             </form>
