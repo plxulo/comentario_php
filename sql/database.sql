@@ -35,6 +35,7 @@ CREATE TABLE app_posts
     imagem MEDIUMBLOB,
     id_admin INT,
     id_comentario INT,
+    nota_post INT,
     FOREIGN KEY (id_comentario) REFERENCES app_comentarios(id),
     FOREIGN KEY (id_admin) REFERENCES usuarios_admin(id)
 );

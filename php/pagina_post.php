@@ -58,14 +58,12 @@
 
                     // Cada DIV é um post:
                     echo("<div>");
-                        echo("<a style='text-decoration:none; color:black' href='pagina_post.php?id=" . $id_post . "'>");
-                            echo("<h3 style='margin-bottom:0'>" . $titulo . "</h3>");
-                            echo("<p style='margin-top:0'>Criador: " . $nome_admin . "</p>");
-                            echo("<br>");
-                            echo("<img src='data:image/jpeg;base64," . $i . "' style='width:100%; height:auto;' alt='Imagem do post'>");
-                            echo("<br>");
-                            echo("<p style='margin-top:0'>" . $conteudo . "</p>");
-                        echo("</a>");
+                        echo("<h3 style='margin-bottom:0'>" . $titulo . "</h3>");
+                        echo("<p style='margin-top:0'>Criador: " . $nome_admin . "</p>");
+                        echo("<br>");
+                        echo("<img src='data:image/jpeg;base64," . $i . "' style='width:100%; height:auto;' alt='Imagem do post'>");
+                        echo("<br>");
+                        echo("<p style='margin-top:0'>" . $conteudo . "</p>");
                     echo("</div>");
                 }
                 else
@@ -74,6 +72,12 @@
                 }
 
             ?>
+        </div>
+
+        <div aria-label="Avaliação">
+            <label for="avaliacao">Avalie este post:</label>
+            <input type="range" min="0" max="5" id="slider" step="1">
+            <p id="slider_value">Valor:</p>
         </div>
 
         <div style="display:flex; flex-direction:column; align-items:center">
@@ -131,4 +135,13 @@
         </div>
     </main>
 </body>
+<script>
+  var slider = document.getElementById("slider");
+  var sliderValue = document.getElementById("slider_value");
+
+  // Atualiza o valor do slider
+  slider.addEventListener("input", function() {
+    sliderValue.textContent = "Valor: " + slider.value;
+  });
+</script>
 </html>
