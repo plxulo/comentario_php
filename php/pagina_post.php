@@ -72,66 +72,65 @@
                 }
 
             ?>
-        </div>
+            <div aria-label="Avaliação">
+                <label for="avaliacao">Avalie este post:</label>
+                <input type="range" min="0" max="5" id="slider" step="1">
+                <p id="slider_value">Valor:</p>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:left">
+                <!-- Formulário de comentários: -->
+                <form action="processar_comentario.php" method="POST" class="frm_comentario" style="text-align: left;">
+                    <label class="texto_formulario" for="nome">Nome:</label><br>
+                    <input type="text" class="frm_nome" name="frm_nome" id="nome">
+                    <br>
+                    <label class="texto_formulario" for="email">Email:</label><br>
+                    <input type="text" class="frm_email" name="frm_email" id="email">
+                    <br>
+                    <label class="texto_formulario" for="comentario">Comentário:</label><br>
+                    <input type="text" class="frm_comentario" name="frm_comentario" id="comentario">
+                    <br>
+                    <input type="submit" name="frm_submit" id="frm_submit" class="frm_submit" value="Comentar">
+                </form>
+                <button onclick="abrir_agendamento();">Faça um agendamento!</button>
+            </div>
 
-        <div aria-label="Avaliação">
-            <label for="avaliacao">Avalie este post:</label>
-            <input type="range" min="0" max="5" id="slider" step="1">
-            <p id="slider_value">Valor:</p>
-        </div>
+            <div>
+                <!-- Exibir comentários: -->
+                <?php
+                    // Selecionar o nome do usuário que enviou comentário por chave estrangeira:
+                    $selecionar_comentario = $pdo->prepare
+                    ("SELECT app_comentarios.*, usuarios.nome 
+                    FROM app_comentarios INNER JOIN usuarios 
+                    ON app_comentarios.id_usuario = usuarios.id 
+                    WHERE app_comentarios.id_post = :id_post
+                    ");
+                    $selecionar_comentario->bindValue(":id_post", $id_post);
+                    $selecionar_comentario->execute();
 
-        <div style="display:flex; flex-direction:column; align-items:center">
-            <!-- Formulário de comentários: -->
-            <form action="processar_comentario.php" method="POST" class="frm_comentario" style="text-align: left;">
-                <label class="texto_formulario" for="nome">Nome:</label><br>
-                <input type="text" class="frm_nome" name="frm_nome" id="nome">
-                <br>
-                <label class="texto_formulario" for="email">Email:</label><br>
-                <input type="text" class="frm_email" name="frm_email" id="email">
-                <br>
-                <label class="texto_formulario" for="comentario">Comentário:</label><br>
-                <input type="text" class="frm_comentario" name="frm_comentario" id="comentario">
-                <br>
-                <input type="submit" name="frm_submit" id="frm_submit" class="frm_submit" value="Comentar">
-            </form>
-        </div>
-
-        <div>
-            <!-- Exibir comentários: -->
-            <?php
-                // Selecionar o nome do usuário que enviou comentário por chave estrangeira:
-                $selecionar_comentario = $pdo->prepare
-                ("SELECT app_comentarios.*, usuarios.nome 
-                FROM app_comentarios INNER JOIN usuarios 
-                ON app_comentarios.id_usuario = usuarios.id 
-                WHERE app_comentarios.id_post = :id_post
-                ");
-                $selecionar_comentario->bindValue(":id_post", $id_post);
-                $selecionar_comentario->execute();
-
-                if($selecionar_comentario->rowCount() == 0)
-                {
-                    echo("<p>Nenhum comentário no momento.</p>");
-                }
-                else
-                {
-                    while($row_comentario = $selecionar_comentario->fetch())
+                    if($selecionar_comentario->rowCount() == 0)
                     {
-                        // Caso deseje exibir o nome do usuário na sessão sem definir
-                        // Uma entrada de input "nome" para o mesmo, utilize a tabela e sessão.
-                        $nome = $row_comentario["nome"];
-
-                        // Nesse caso, como eu possuo uma entrada para o nome e desejo exibir
-                        // O nome de cada entrada, eu utilizarei o seguinte código
-                        // Para atribuir o valor da entrada nome para a variável e exibi-lá:
-                        $comentario = $row_comentario["comentario"];
-
-                        echo("<h2 style='margin-bottom:0'>" . $nome . "</h2>");
-                        echo("<br>");
-                        echo("<p style='margin-top:0'>" . $comentario . "</p>");
+                        echo("<p>Nenhum comentário no momento.</p>");
                     }
-                }
-            ?>
+                    else
+                    {
+                        while($row_comentario = $selecionar_comentario->fetch())
+                        {
+                            // Caso deseje exibir o nome do usuário na sessão sem definir
+                            // Uma entrada de input "nome" para o mesmo, utilize a tabela e sessão.
+                            $nome = $row_comentario["nome"];
+
+                            // Nesse caso, como eu possuo uma entrada para o nome e desejo exibir
+                            // O nome de cada entrada, eu utilizarei o seguinte código
+                            // Para atribuir o valor da entrada nome para a variável e exibi-lá:
+                            $comentario = $row_comentario["comentario"];
+
+                            echo("<h2 style='margin-bottom:0'>" . $nome . "</h2>");
+                            echo("<br>");
+                            echo("<p style='margin-top:0'>" . $comentario . "</p>");
+                        }
+                    }
+                ?>
+            </div>
         </div>
     </main>
 </body>
@@ -143,5 +142,9 @@
   slider.addEventListener("input", function() {
     sliderValue.textContent = "Valor: " + slider.value;
   });
+
+  function abrir_agendamento() {
+    window.open("agendamento.php");
+  }
 </script>
 </html>

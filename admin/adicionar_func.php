@@ -28,22 +28,19 @@
             <h1>Olá Administrador, <?php echo $logado; ?>!</h1>
             <a href="../php/login_usuario.php">Área do Usuário</a>
             <a href="adicionar_post.php">Adicionar Post</a>
-            <a href="adicionar_func.php">Adicionar Funcionário</a>
             <a href="logout.php">Sair</a>
         </div>
 
         <div style="display:flex; flex-direction:column; align-items:center">
             <!-- Formulário de comentários: -->
-            <form action="processar_post.php" method="POST" class="frm_post" style="text-align: left;" enctype="multipart/form-data">
-                <label class="texto_formulario" for="nome">Título:</label><br>
-                <input type="text" class="pst_titulo" name="pst_titulo" id="titulo">
+            <form action="processar_func.php" method="POST" class="frm_post" style="text-align: left;" enctype="multipart/form-data">
+                <label for="nome_func">Nome do funcionário:</label>
+                <input type="text" id="nome_func" name="nome_func">
                 <br>
-                <label class="texto_formulario" for="email">Conteúdo:</label><br>
-                <textarea class="pst_conteudo" name="pst_conteudo" id="conteudo"></textarea>
+                <label for="img_func">Foto do funcionário:</label>
+                <input type="file" id="img_func" name="img_func">
                 <br>
-                <input type="file" class="pst_imagem" name="pst_imagem" id="imagem">
-                <br>
-                <input type="submit" name="pst_submit" id="pst_submit" class="pst_submit" value="Enviar post">
+                <input type="submit">
             </form>
         </div>
 

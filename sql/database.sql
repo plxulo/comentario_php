@@ -17,6 +17,13 @@ CREATE TABLE usuarios_admin
     senha VARCHAR(50)
 );
 
+CREATE TABLE funcionarios
+(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50),
+    imagem MEDIUMBLOB
+)
+
 CREATE TABLE app_comentarios
 (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -39,3 +46,9 @@ CREATE TABLE app_posts
     FOREIGN KEY (id_comentario) REFERENCES app_comentarios(id),
     FOREIGN KEY (id_admin) REFERENCES usuarios_admin(id)
 );
+
+ALTER TABLE app_comentarios ADD FOREIGN KEY (id_usuario) REFERENCES usuarios(id); 
+ALTER TABLE app_comentarios ADD FOREIGN KEY (id_post) REFERENCES app_posts(id);
+
+ALTER TABLE app_posts ADD FOREIGN KEY (id_admin) REFERENCES usuarios_admin(id);
+ALTER TABLE app_posts ADD FOREIGN KEY (id_comentario) REFERENCES app_comentarios(id);
