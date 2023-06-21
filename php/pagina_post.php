@@ -134,6 +134,7 @@
         </div>
     </main>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   var slider = document.getElementById("slider");
   var sliderValue = document.getElementById("slider_value");
@@ -146,5 +147,27 @@
   function abrir_agendamento() {
     window.open("agendamento.php");
   }
+
+    $(document).ready(function() {
+    $('#slider').on('input', function() {
+        var valorSlider = $(this).val();
+
+        // Envie o valor do slider para o script PHP usando uma solicitação AJAX
+            $.ajax({
+                url: 'inserir_valor.php',
+                method: 'POST',
+                data: { valorSlider: valorSlider },
+                success: function(response) {
+                    console.log(response);
+                    // Faça algo com a resposta do servidor, se necessário
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                    // Lide com erros, se ocorrerem
+                }
+            });
+        });
+    });
+
 </script>
 </html>

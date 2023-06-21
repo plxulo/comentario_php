@@ -22,7 +22,7 @@ CREATE TABLE funcionarios
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50),
     imagem MEDIUMBLOB
-)
+);
 
 CREATE TABLE app_comentarios
 (
@@ -46,6 +46,18 @@ CREATE TABLE app_posts
     FOREIGN KEY (id_comentario) REFERENCES app_comentarios(id),
     FOREIGN KEY (id_admin) REFERENCES usuarios_admin(id)
 );
+
+CREATE TABLE app_agendamentos
+(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    data_agendamento DATETIME,
+    cliente INT,
+    email_cliente VARCHAR(90),
+    funcionario INT
+);
+
+ALTER TABLE app_agendamentos ADD FOREIGN KEY (cliente) REFERENCES usuarios(id); 
+ALTER TABLE app_agendamentos ADD FOREIGN KEY (funcionario) REFERENCES funcionarios(id);
 
 ALTER TABLE app_comentarios ADD FOREIGN KEY (id_usuario) REFERENCES usuarios(id); 
 ALTER TABLE app_comentarios ADD FOREIGN KEY (id_post) REFERENCES app_posts(id);

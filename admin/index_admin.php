@@ -47,6 +47,36 @@
             </form>
         </div>
 
+        <div class="agendamentos" style="display:flex; flex-direction:column; align-items:center">
+            <?php
+
+                $selecionar_agendamentos = $pdo->prepare("SELECT app_agendamentos.*, funcionarios.nome AS nome_funcionario, usuarios.nome AS nome_cliente
+                                                FROM app_agendamentos
+                                                INNER JOIN funcionarios ON app_agendamentos.funcionario = funcionarios.id
+                                                INNER JOIN usuarios ON app_agendamentos.cliente = usuarios.id");
+                $selecionar_agendamentos->execute();
+                if($selecionar_agendamentos->rowCount() == 0)
+                {
+                    echo("<p>Nenhum agendamento no momento</p>");
+                }
+                else
+                {
+                    while($row_agendamento = $selecionar_agendamentos->fetch())
+                    {
+                        $cliente = $row_agendamento["nome_cliente"];
+                        $funcionario = $row_agendamento["nome_funcionario"];
+                        $data = $row_agendamento["data_agendamento"];
+
+                        echo("<p style='margin-bottom:0'>Cliente: " . $cliente . "</p>");
+                        echo("<br>");
+                        echo("<p style='margin-bottom:0'>Funcionário: " . $funcionario . "</p>");
+                        echo("<br>");
+                        echo("<p style='margin-bottom:0'>Data: " . $data . "</p>");
+                    }
+                }
+            ?>
+        </div>
+
         <div>
             <?php
                 // Selecionar o nome do usuário que enviou comentário por chave estrangeira:
@@ -59,7 +89,7 @@
 
                 if($selecionar_comentario->rowCount() == 0)
                 {
-                    echo("<p>Nenhum post no momento.</p>");
+                    echo("<p>Nenhum comentário no momento.</p>");
                 }
                 else
                 {

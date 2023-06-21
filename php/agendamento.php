@@ -32,65 +32,37 @@
             </div>
         </div>
         <div style="display:flex; flex-direction:column;align-items:left">
-            <form>
+            <form action="processar_agendamento.php" method="POST">
                 <input type="text" placeholder="Seu nome" name="frm_usuario">
                 <br>
                 <input type="email" placeholder="Email" name="frm_email">
                 <br>
-                <input type="date">
+                <input type="date" name="data_agendamento">
                 <br>
-                <select onchange="exibirImagemFuncionario(this.value);" id="selecionar_func">
+                <select id="selecionar_func" name="selecionar_func">
                     <?php
 
                         $selecionar_func = $pdo->prepare("SELECT * FROM funcionarios");
                         $selecionar_func->execute();
 
-                        if($selecionar_func->rowCount() > 0)
-                        {
-                            $row = $selecionar_func->fetch();
-                            $imagem_funcionario = $row["imagem"];
-                            $i = base64_encode($imagem_funcionario);
-                            while($linhas_func = $selecionar_func->fetch())
-                            {
-                                $nome_func = $linhas_func["nome"];
-                                $id_func = $linhas_func["id"];
-                                echo("<option value='$id_func'> Funcionário: " . $nome_func);
-                            }
-                        }
-                        else
+                        if($selecionar_func->rowCount() == 0)
                         {
                             echo("<option>Nenhum funcionário cadastrado</option>");
                         }
+
+                        while($linhas_func = $selecionar_func->fetch())
+                        {
+                            $id_func = $linhas_func["id"];
+                            $nome_func = $linhas_func["nome"];
+                            echo("<option value='$id_func'> Funcionário: " . $nome_func . "</option>");
+                        }
                     ?>
                 </select>
+                <input type="submit">
             </form>
             <div id="imagemFuncionario" width="200px" height="200px"></div>
         </div>
     </main>
 
 </body>
-<script>
-
-    function exibirImagemFuncionario(idFuncionario) {
-        // Atualize o caminho da requisição AJAX para apontar para o script PHP criado
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    // Crie um elemento de imagem e defina o caminho como o script PHP
-                    var imagem = document.createElement('img');
-                    imagem.src = 'exibir_imagem.php?id=' + idFuncionario;
-
-                    // Limpe o conteúdo anterior e adicione a nova imagem na div correspondente
-                    var imagemFuncionario = document.getElementById("imagemFuncionario");
-                    imagemFuncionario.innerHTML = '';
-                    imagemFuncionario.appendChild(imagem);
-                }
-            }
-        };
-
-        xhr.open("GET", "exibir_imagem.php?id=" + idFuncionario, true);
-        xhr.send();
-    }
-</script>
 </html>
