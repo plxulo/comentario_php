@@ -8,6 +8,20 @@
     }
 
     $logado = $_SESSION["usuario"];
+    // Recebe o valor da URL definido no index.php por meio do $_GET (está na URL né) e passa o valor para a variável $id_post:
+    $id_post = $_GET["id"];
+    $_SESSION["id_post"] = $id_post;
+    // Utilizando o ID recebido realizamos uma consulta no banco de dados!
+    $selecionar_posts = $pdo->prepare
+    ("SELECT app_posts.*, usuarios_admin.nome
+    FROM app_posts INNER JOIN usuarios_admin
+    ON app_posts.id_admin = usuarios_admin.id
+    WHERE app_posts.id = :id
+    ");
+    $selecionar_posts->bindValue(":id", $id_post);
+    $selecionar_posts->execute();
+    $post = $selecionar_posts->fetch();
+    $nome_post = $post["titulo"];
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -16,37 +30,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
+    <?php /* Exibe nome do POST / BARBEARIA no título: */ echo "<title>$nome_post</title>"; ?>
 </head>
 
 <body>
     <main style="display:flex; flex-direction:column; align-items:center">
-        <div class="banner" style="display:flex; flex-direction:column; align-items:center">
-            <h1>Olá, <?php echo $logado; ?>!</h1>
-            <div align="center">
-                <a href="index.php"><-Voltar</a>
-                <a href="../admin/login_admin.php">Área do Administrador</a>
-                <a href="logout.php">Sair</a>
-            </div>
+        <div class="banner" style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+            <h1>Olá <?php echo $logado; ?>!</h1>
+            <a href="index.php">Home</a>
+            <a href="../admin/index_admin.php">Área do Administrador</a>
+            <a href="logout.php">Sair</a>
         </div>
 
         <!-- Exibir posts: -->
         <div style="display:flex; flex-direction:column; width: 25%; text-align:left">
             <?php
-                // Recebe o valor da URL definido no index.php por meio do $_GET (está na URL né) e passa o valor para a variável $id_post:
-                $id_post = $_GET["id"];
-                $_SESSION["id_post"] = $id_post;
-                // Utilizando o ID recebido realizamos uma consulta no banco de dados!
-                $selecionar_posts = $pdo->prepare
-                ("SELECT app_posts.*, usuarios_admin.nome
-                FROM app_posts INNER JOIN usuarios_admin
-                ON app_posts.id_admin = usuarios_admin.id
-                WHERE app_posts.id = :id
-                ");
-                $selecionar_posts->bindValue(":id", $id_post);
-                $selecionar_posts->execute();
-                $post = $selecionar_posts->fetch();
-
                 if ($post)
                 {
                     $id_post = $post["id"];
@@ -73,25 +71,19 @@
 
             ?>
             <div aria-label="Avaliação">
-                <label for="avaliacao">Avalie este post:</label>
+                <label for="avaliacao">Avalie esta barbearia:</label>
                 <input type="range" min="0" max="5" id="slider" step="1">
                 <p id="slider_value">Valor:</p>
             </div>
             <div style="display:flex; flex-direction:column; align-items:left">
+                <button onclick="abrir_agendamento();">Faça um agendamento!</button>
                 <!-- Formulário de comentários: -->
                 <form action="processar_comentario.php" method="POST" class="frm_comentario" style="text-align: left;">
-                    <label class="texto_formulario" for="nome">Nome:</label><br>
-                    <input type="text" class="frm_nome" name="frm_nome" id="nome">
-                    <br>
-                    <label class="texto_formulario" for="email">Email:</label><br>
-                    <input type="text" class="frm_email" name="frm_email" id="email">
-                    <br>
-                    <label class="texto_formulario" for="comentario">Comentário:</label><br>
+                    <label class="texto_formulario" for="comentario">Comente sobre esta barbearia:</label><br>
                     <input type="text" class="frm_comentario" name="frm_comentario" id="comentario">
                     <br>
                     <input type="submit" name="frm_submit" id="frm_submit" class="frm_submit" value="Comentar">
                 </form>
-                <button onclick="abrir_agendamento();">Faça um agendamento!</button>
             </div>
 
             <div>

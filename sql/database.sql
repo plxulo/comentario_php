@@ -6,6 +6,9 @@ CREATE TABLE usuarios
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50),
     email VARCHAR(50),
+    rua VARCHAR(90),
+    numero INT,
+    cep VARCHAR(10),
     senha VARCHAR(50)
 );
 
@@ -50,7 +53,8 @@ CREATE TABLE app_posts
 CREATE TABLE app_agendamentos
 (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    data_agendamento DATETIME,
+    data_agendamento DATE,
+    local_agendamento VARCHAR(90),
     cliente INT,
     email_cliente VARCHAR(90),
     funcionario INT

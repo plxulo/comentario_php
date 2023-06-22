@@ -24,8 +24,9 @@
 
 <body>
     <main align="center">
-        <div class="banner">
+        <div class="banner" style="display:flex; flex-direction:column; align-items:center; gap:10px;">
             <h1>Olá Administrador, <?php echo $logado; ?>!</h1>
+            <a href="index_admin.php">Home</a>
             <a href="../php/login_usuario.php">Área do Usuário</a>
             <a href="adicionar_post.php">Adicionar Post</a>
             <a href="adicionar_func.php">Adicionar Funcionário</a>

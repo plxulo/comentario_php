@@ -20,33 +20,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
+    <title>Index</title>
 </head>
 
 <body>
     <main style="display:flex; flex-direction:column; align-items:center">
-        <div class="banner" style="display:flex; flex-direction:column; align-items:center">
-            <h1>Olá, <?php echo $logado; ?>!</h1>
-            <div>
-                <a href="../admin/login_admin.php">Área do Administrador</a>
-                <a href="logout.php">Sair</a>
-            </div>
-        </div>
-
-        <div style="display:flex; flex-direction:column; align-items:center">
-            <!-- Formulário de comentários: -->
-            <form action="processar_comentario.php" method="POST" class="frm_comentario" style="text-align: left;">
-                <label class="texto_formulario" for="nome">Nome:</label><br>
-                <input type="text" class="frm_nome" name="frm_nome" id="nome">
-                <br>
-                <label class="texto_formulario" for="email">Email:</label><br>
-                <input type="text" class="frm_email" name="frm_email" id="email">
-                <br>
-                <label class="texto_formulario" for="comentario">Comentário:</label><br>
-                <input type="text" class="frm_comentario" name="frm_comentario" id="comentario">
-                <br>
-                <input type="submit" name="frm_submit" id="frm_submit" class="frm_submit" value="Comentar">
-            </form>
+        <div class="banner" style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+            <h1>Olá <?php echo $logado; ?>!</h1>
+            <a href="index.php">Home</a>
+            <a href="../admin/index_admin.php">Área do Administrador</a>
+            <a href="logout.php">Sair</a>
         </div>
 
         <!-- Exibir posts: -->

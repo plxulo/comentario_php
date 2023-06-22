@@ -24,27 +24,13 @@
 
 <body>
     <main align="center">
-        <div class="banner">
+        <div class="banner" style="display:flex; flex-direction:column; align-items:center; gap:10px;">
             <h1>Olá Administrador, <?php echo $logado; ?>!</h1>
+            <a href="index_admin.php">Home</a>
             <a href="../php/login_usuario.php">Área do Usuário</a>
             <a href="adicionar_post.php">Adicionar Post</a>
+            <a href="adicionar_func.php">Adicionar Funcionário</a>
             <a href="logout.php">Sair</a>
-        </div>
-
-        <div style="display:flex; flex-direction:column; align-items:center">
-            <!-- Formulário de comentários: -->
-            <form action="processar_comentario_adm.php" method="POST" class="frm_comentario" style="text-align: left;">
-                <label class="texto_formulario" for="nome">Nome:</label><br>
-                <input type="text" class="frm_nome" name="frm_nome" id="nome">
-                <br>
-                <label class="texto_formulario" for="email">Email:</label><br>
-                <input type="text" class="frm_email" name="frm_email" id="email">
-                <br>
-                <label class="texto_formulario" for="comentario">Comentário:</label><br>
-                <input type="text" class="frm_comentario" name="frm_comentario" id="comentario">
-                <br>
-                <input type="submit" name="frm_submit" id="frm_submit" class="frm_submit" value="Comentar">
-            </form>
         </div>
 
         <div class="agendamentos" style="display:flex; flex-direction:column; align-items:center">
@@ -63,15 +49,37 @@
                 {
                     while($row_agendamento = $selecionar_agendamentos->fetch())
                     {
+                        $cliente_id = $row_agendamento["id"];
                         $cliente = $row_agendamento["nome_cliente"];
                         $funcionario = $row_agendamento["nome_funcionario"];
                         $data = $row_agendamento["data_agendamento"];
-
-                        echo("<p style='margin-bottom:0'>Cliente: " . $cliente . "</p>");
-                        echo("<br>");
-                        echo("<p style='margin-bottom:0'>Funcionário: " . $funcionario . "</p>");
-                        echo("<br>");
-                        echo("<p style='margin-bottom:0'>Data: " . $data . "</p>");
+                        $local = $row_agendamento["local_agendamento"];
+                        echo
+                        ("
+                            <table border='solid, 1px'>
+                                <thead>
+                                    <tr>
+                                        <th>Cliente</th>
+                                        <th>Funcionário</th>
+                                        <th>Data</th>
+                                        <th>Local</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>$cliente</td>
+                                        <td>$funcionario</td>
+                                        <td>$data</td>
+                                        <td>$local</td>
+                                        <td><a>Excluir</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        ");
+                            //echo("<p style='margin-bottom:0'>Cliente: " . $cliente . "</p>");
+                            //echo("<p style='margin-bottom:0'>Funcionário: " . $funcionario . "</p>");
+                            //echo("<p style='margin-bottom:0'>Data: " . $data . "</p>");
                     }
                 }
             ?>

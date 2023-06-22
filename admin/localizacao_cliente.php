@@ -33,19 +33,16 @@
             <a href="logout.php">Sair</a>
         </div>
 
-        <div style="display:flex; flex-direction:column; align-items:center">
-            <!-- Formulário de comentários: -->
-            <form action="processar_func.php" method="POST" class="frm_post" style="text-align: left;" enctype="multipart/form-data">
-                <label for="nome_func">Nome do funcionário:</label>
-                <input type="text" id="nome_func" name="nome_func">
-                <br>
-                <label for="img_func">Foto do funcionário:</label>
-                <input type="file" id="img_func" name="img_func">
-                <br>
-                <input type="submit">
-            </form>
-        </div>
+        <div class="local_cliente" style="display:flex; flex-direction:column; align-items:center">
+            <?php
 
+                $selecionar_agendamentos = $pdo->prepare("SELECT app_agendamentos.*, funcionarios.nome AS nome_funcionario, usuarios.nome AS nome_cliente, id
+                                                FROM app_agendamentos
+                                                INNER JOIN funcionarios ON app_agendamentos.funcionario = funcionarios.id
+                                                INNER JOIN usuarios ON app_agendamentos.cliente = usuarios.id");
+                $selecionar_agendamentos->execute();
+            ?>
+        </div>
     </main>
 </body>
 </html>

@@ -10,7 +10,6 @@
     session_start();
 
     $comentario = $_POST['frm_comentario'];
-    $nome = $_POST['frm_nome'];
     $id_usuario = $_SESSION['id'];
     $id_post_atual = $_SESSION['id_post'];
 

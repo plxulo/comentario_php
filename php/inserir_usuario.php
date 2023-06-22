@@ -5,12 +5,18 @@
 
     $nome = $_POST['nome'];
     $email = $_POST['email'];
+    $rua = $_POST['rua'];
+    $numero = $_POST['numero'];
+    $cep = $_POST['cep'];
     $senha = $_POST['senha'];
 
-    $inserir = $pdo->prepare("INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)");
+    $inserir = $pdo->prepare("INSERT INTO usuarios (nome, email, rua, numero, cep, senha) VALUES (?, ?, ?, ?, ?, ?)");
     $inserir->bindParam(1, $nome);
     $inserir->bindParam(2, $email);
-    $inserir->bindParam(3, $senha);
+    $inserir->bindParam(3, $rua);
+    $inserir->bindParam(4, $numero);
+    $inserir->bindParam(5, $cep);
+    $inserir->bindParam(6, $senha);
     $inserir->execute();
 
     // Pegar o último ID inserido:
